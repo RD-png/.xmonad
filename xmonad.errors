@@ -1,0 +1,16 @@
+
+xmonad.hs:171:7: warning: [-Wdeprecations]
+    In the use of ‘smartSpacingWithEdge’
+    (imported from XMonad.Layout.Spacing):
+    Deprecated: "Use spacingRaw instead."
+    |
+171 |       smartSpacingWithEdge 8 $ layoutHook defaultConfig
+    |       ^^^^^^^^^^^^^^^^^^^^
+
+xmonad.hs:171:43: warning: [-Wdeprecations]
+    In the use of ‘defaultConfig’
+    (imported from XMonad, but defined in XMonad.Config):
+    Deprecated: "Use def (from Data.Default, and re-exported by XMonad and XMonad.Config) instead."
+    |
+171 |       smartSpacingWithEdge 8 $ layoutHook defaultConfig
+    |                                           ^^^^^^^^^^^^^
