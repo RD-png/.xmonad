@@ -121,7 +121,7 @@ wmWorkspaces = [" web ", " edit ", " dir ", " term ", " disc ", " mu ", " sys ",
 wmLayoutHook = avoidStruts
   $ mkToggle (single REFLECTX)
   $ mkToggle (NBFULL ?? EOT)
-  $ spacingRaw True (Border 0 0 0 0) True (Border 0 0 4 4) True $ gaps [(U,8), (D,8), (R,4), (L,4)]
+  $ spacingRaw True (Border 0 0 0 0) True (Border 4 4 4 4) True $ gaps [(U,4), (D,4), (R,4), (L,4)]
   $ tiled ||| Grid ||| multiCol [1] 1 0.01 (-0.5)
   where
     tiled = Tall nmaster delta ratio
@@ -134,6 +134,7 @@ wmLayoutHook = avoidStruts
 wmStartupHook = do
   spawnOnce "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00"
   spawnOnce "pulseaudio -D"
+  spawnOnce "feh --bg-scale xpm/tomorrowHarv.jpg"
 
 
 -- Keys
