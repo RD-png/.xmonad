@@ -20,5 +20,5 @@ Config { font    = "xft:Source Code Pro:weight=bold:pixelsize=12:antialias=true:
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <icon=nixos-logo.xpm/> %UnsafeStdinReader% }{ <fc=#666666>|</fc>  <fc=#ecbe7b> <action=`alacritty -e htop`>%cpu%</action> </fc> <fc=#666666>|</fc>  <fc=#ff6c6b> <action=`alacritty -e htop`>%memory%</action> </fc> <fc=#666666>|</fc>  <fc=#51afef> <action=`alacritty -e htop`>%disku%</action> </fc> <fc=#666666>|</fc> <fc=#46d9ff> %date% </fc>"
+       , template = " <icon=nixos-logo.xpm/> %UnsafeStdinReader% }{ <fc=#666666>|</fc>  <fc=#ecbe7b> <action=`alacritty -e htop`>%cpu%</action> </fc> <fc=#666666>|</fc>  <fc=#ff6c6b> <action=`alacritty -e htop`>%memory%</action> </fc> <fc=#666666>|</fc>  <fc=#ecbe7b> <action=`alacritty -e htop`>%disku%</action> </fc> <fc=#666666>|</fc> <fc=#ff6c6b> %date% </fc>"
        }
