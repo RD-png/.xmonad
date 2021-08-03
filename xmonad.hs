@@ -2,34 +2,35 @@ import XMonad
 
 -- Hooks
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
-
 import XMonad.Hooks.EwmhDesktops (fullscreenEventHook)
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.InsertPosition (insertPosition)
-import XMonad.Hooks.InsertPosition (Focus (Newer), Position (Below))
+import XMonad.Hooks.InsertPosition (insertPosition, Focus (Newer), Position (Below))
 
 -- Utils
-import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Util.Run (spawnPipe, safeSpawn)
+import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
 -- Layout
 import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
-import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
+import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL))
 import XMonad.Layout.MultiColumns
 import XMonad.Layout.Grid
 import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
-import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
 import XMonad.Layout.Reflect
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 
 -- Actions
 import XMonad.Actions.CopyWindow (kill1)
+import XMonad.Actions.PerWorkspaceKeys
+import XMonad.Actions.CycleWS
 
 -- Misc
 import System.IO
+import qualified XMonad.StackSet as W
+
 
 -- Main
 main :: IO ()
@@ -41,7 +42,8 @@ main = do
     $ withUrgencyHook NoUrgencyHook
     $ def
       -- Defaults
-      { modMask             = wmModKey
+      {
+        modMask             = wmModKey
       , terminal            = wmTerm
       , focusFollowsMouse   = mouseFocus
       , borderWidth         = wmBorderSize
@@ -55,7 +57,8 @@ main = do
       , layoutHook          = wmLayoutHook
       , startupHook         = wmStartupHook
       , logHook = dynamicLogWithPP $ xmobarPP
-         { ppOutput = \x -> hPutStrLn xmproc1 x
+         {
+           ppOutput = hPutStrLn xmproc1
          , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]"
          , ppVisible = xmobarColor "#98be65" ""
          , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" ""
@@ -65,7 +68,7 @@ main = do
          , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"
          , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
          }
-      } `additionalKeysP` wmKeys
+      } `additionalKeys` wmKeys
 
 
 -- Defaults
@@ -109,12 +112,6 @@ layoutColor = "#AA3355"
 
 -- Workspaces
 wmWorkspaces = [" web ", " edit ", " dir ", " term ", " disc ", " mu ", " sys ", " vid ", " gfx "]
-  where
-    ws l =
-      [ "^ca(1,xdotool key super+" ++ show n ++ ")  " ++ ws ++ "  ^ca()"
-      | (i, ws) <- zip [1 ..] l
-      , let n = i
-      ]
 
 
 -- Layout Hook
@@ -134,26 +131,28 @@ wmLayoutHook = avoidStruts
 wmStartupHook = do
   spawnOnce "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00"
   spawnOnce "pulseaudio -D"
-  spawnOnce "feh --bg-scale xpm/tomorrowHarv.jpg"
+  spawnOnce "feh --bg-scale /root/.xmonad/xpm/tomorrowsHarv.jpg"
 
 
 -- Keys
-wmKeys :: [(String, X ())]
 wmKeys =
-  [ ("M-S-c", spawn "xmonad --recompile")
-  , ("M-S-r", spawn "xmonad --restart")
-  -- WM Util
-  , ("M-d", spawn dmenu)
-  , ("M-q", kill1)
-  , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
-  , ("M-S-f", sendMessage $ MT.Toggle REFLECTX)
+  [
+    ((wmModKey .|. shiftMask, xK_c), spawn "xmonad --recompile")
+  , ((wmModKey .|. shiftMask, xK_r), spawn "xmonad --restart")
+  -- -- WM Util
+  , ((wmModKey, xK_d), spawn dmenu)
+  , ((wmModKey, xK_q), kill1)
+  , ((wmModKey, xK_f), sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
+  , ((wmModKey .|. shiftMask, xK_f), sendMessage $ MT.Toggle REFLECTX)
   -- WM Programs
-  , ("M-<Return>", spawn wmTerm)
-  , ("M-S-<Return>", spawn "pcmanfm")
-  , ("M-S-d", spawn "discord --no-sandbox")
-  , ("M-S-e", spawn "emacs")
-  , ("M-w", spawn wmBrowser)
+  , ((wmModKey, xK_Return), spawn wmTerm)
+  , ((wmModKey .|. shiftMask, xK_Return), spawn "pcmanfm")
+  , ((wmModKey .|. shiftMask, xK_d), spawn "discord --no-sandbox")
+  , ((wmModKey .|. shiftMask, xK_e), spawn "emacs")
+  , ((wmModKey, xK_w), spawn wmBrowser)
   ]
+  ++[((wmModKey , k), bindOn
+       [ ("", windows $ W.greedyView n), (n , toggleWS)]) | (n, k) <- zip wmWorkspaces ([xK_1..xK_9]++[xK_0])]
   where
     fn = "Misc Termsyn.Icons:size=12.8"
     dmenu =
