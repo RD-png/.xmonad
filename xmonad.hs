@@ -131,6 +131,7 @@ wmLayoutHook = avoidStruts
 
 -- Startup Hook
 wmStartupHook = do
+  spawnOnce "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00"
   spawnOnce "pulseaudio -D"
   spawnOnce "feh --bg-scale /root/.xmonad/xpm/tomorrowsHarv.jpg"
 
@@ -153,7 +154,7 @@ wmKeys =
   , ((wmModKey, xK_w), spawn wmBrowser)
   ]
   ++[((wmModKey , k), bindOn
-       [ ("", windows $ W.greedyView n), (n, swapNextScreen)]) | (n, k) <- zip wmWorkspaces ([xK_1..xK_9]++[xK_0])]
+       [ ("", windows $ W.greedyView n), (n, toggleWS)]) | (n, k) <- zip wmWorkspaces ([xK_1..xK_9]++[xK_0])]
   where
     fn = "Misc Termsyn.Icons:size=12.8"
     dmenu =
