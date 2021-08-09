@@ -152,6 +152,7 @@ wmKeys =
   , ((wmModKey .|. shiftMask, xK_e), spawn "emacs")
   , ((wmModKey, xK_w), spawn wmBrowser)
   ]
+  -- Multi monitor
   ++[((wmModKey , k), bindOn
        [ ("", windows $ W.greedyView n), (n, swapNextScreen)]) | (n, k) <- zip wmWorkspaces ([xK_1..xK_9]++[xK_0])]
   where
