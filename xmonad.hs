@@ -38,7 +38,7 @@ import qualified XMonad.StackSet as W
 main :: IO ()
 main = do
   -- Xmobar
-  xmproc1 <- spawnPipe "xmobar -x 0 $HOME/.xmonad/xmobarrc"
+  xmproc1 <- spawnPipe "xmobar -x 0 $HOME/.config/xmonad/xmobarrc"
   xmonad
     $ docks
     $ withUrgencyHook NoUrgencyHook
@@ -133,7 +133,7 @@ wmLayoutHook = avoidStruts
 wmStartupHook = do
   spawnOnce "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00"
   spawnOnce "pulseaudio -D"
-  spawnOnce "feh --bg-scale /root/.xmonad/xpm/tomorrowsHarv.jpg"
+  spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/nfv.jpg"
 
 
 -- Keys
