@@ -61,9 +61,9 @@ main = do
       , logHook = dynamicLogWithPP $ xmobarPP
          {
            ppOutput = \x -> hPutStrLn xmproc1 x
-         , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]"
+         , ppCurrent = xmobarColor "#98be65" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"
          , ppVisible = xmobarColor "#98be65" ""
-         , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" ""
+         , ppHidden = xmobarColor "#82AAFF" "" . wrap "" ""
          , ppHiddenNoWindows = xmobarColor "#c792ea" ""
          , ppTitle = xmobarColor "#c5c8c6" "" . shorten 60
          , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"
