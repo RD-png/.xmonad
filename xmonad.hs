@@ -95,7 +95,7 @@ wmBorderNormal :: String
 wmBorderNormal = "#5a6478"
 
 wmBorderFocus :: String
-wmBorderFocus = "#ff6c6b"
+wmBorderFocus = "#c792ea"
 
 wmFont :: String
 wmFont = "xft:Source Code Pro:regular:size=10:antialias=true:hinting=true"
