@@ -129,7 +129,7 @@ wmLayoutHook = avoidStruts
     ratio = 1/2
 
 
--- Startup Hook
+-- Startup Hook (laptop res)
 wmStartupHook = do
   spawnOnce "xrandr --output LVDS-1 --mode 1366x768 --rate 60.00"
   spawnOnce "xset r rate 200 30"
