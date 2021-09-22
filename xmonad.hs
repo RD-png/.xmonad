@@ -128,13 +128,12 @@ wmLayoutHook = avoidStruts
     delta = 3/100
     ratio = 1/2
 
-
 -- Startup Hook
 wmStartupHook = do
   spawnOnce "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00"
   spawnOnce "xset r rate 200 30"
   spawnOnce "pulseaudio -D"
-  spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/lights.jpg"
+  spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/street.jpg"
 
 
 -- Keys
@@ -151,6 +150,7 @@ wmKeys =
   , ((wmModKey, xK_Return), spawn wmTerm)
   , ((wmModKey .|. shiftMask, xK_Return), spawn "pcmanfm")
   , ((wmModKey .|. shiftMask, xK_d), spawn "discord --no-sandbox")
+  , ((wmModKey .|. shiftMask, xK_p), spawn "postman --no-sandbox")
   , ((wmModKey .|. shiftMask, xK_e), spawn "emacs")
   , ((wmModKey, xK_w), spawn wmBrowser)
   ]

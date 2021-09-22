@@ -5,6 +5,7 @@ let
     xmonad
     xmonad-contrib
     xmonad-extras
+    haskell-language-server
   ]);
 in
   pkgs.stdenv.mkDerivation {
