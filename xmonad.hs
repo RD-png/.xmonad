@@ -131,7 +131,9 @@ wmLayoutHook = avoidStruts
 
 -- Startup Hook
 wmStartupHook = do
-  spawnOnce "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00"
+  -- spawnOnce "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00"
+  spawnOnce "xrandr --output VGA-1 --mode 1920x1080"
+  spawnOnce "xrandr --output DP-1 --mode 1920x1080 --left-of VGA-1"
   spawnOnce "xset r rate 200 30"
   spawnOnce "pulseaudio -D"
   spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/lights.jpg"
@@ -151,16 +153,12 @@ wmKeys =
   , ((wmModKey, xK_Return), spawn wmTerm)
   , ((wmModKey .|. shiftMask, xK_Return), spawn "pcmanfm")
   , ((wmModKey .|. shiftMask, xK_d), spawn "discord --no-sandbox")
+  , ((wmModKey .|. shiftMask, xK_p), spawn "postman --no-sandbox")
   , ((wmModKey .|. shiftMask, xK_e), spawn "emacs")
   , ((wmModKey, xK_w), spawn wmBrowser)
   ]
-<<<<<<< HEAD
-  -- Single monitor setup
-=======
-  -- Multi monitor
->>>>>>> 494177071db897ce41ce22ad0692bff60cba0217
   ++[((wmModKey , k), bindOn
-       [ ("", windows $ W.greedyView n), (n, toggleWS)]) | (n, k) <- zip wmWorkspaces ([xK_1..xK_9]++[xK_0])]
+       [ ("", windows $ W.greedyView n), (n, swapNextScreen)]) | (n, k) <- zip wmWorkspaces ([xK_1..xK_9]++[xK_0])]
   where
     fn = "Misc Termsyn.Icons:size=12.8"
     dmenu =
