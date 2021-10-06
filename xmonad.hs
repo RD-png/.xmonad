@@ -136,7 +136,7 @@ wmStartupHook = do
   spawnOnce "xrandr --output DP-1 --mode 1920x1080 --left-of VGA-1"
   spawnOnce "xset r rate 200 30"
   spawnOnce "pulseaudio -D"
-  spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/lights.jpg"
+  spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/street.jpg"
 
 
 -- Keys
@@ -151,7 +151,7 @@ wmKeys =
   , ((wmModKey .|. shiftMask, xK_f), sendMessage $ MT.Toggle REFLECTX)
   -- WM Programs
   , ((wmModKey, xK_Return), spawn wmTerm)
-  , ((wmModKey .|. shiftMask, xK_Return), spawn "pcmanfm")
+  , ((wmModKey .|. shiftMask, xK_Return), spawn "thunar")
   , ((wmModKey .|. shiftMask, xK_d), spawn "discord --no-sandbox")
   , ((wmModKey .|. shiftMask, xK_p), spawn "postman --no-sandbox")
   , ((wmModKey .|. shiftMask, xK_e), spawn "emacs")
