@@ -132,9 +132,8 @@ wmLayoutHook = avoidStruts
 -- Startup Hook (laptop res)
 wmStartupHook = do
   spawnOnce "xrandr --output LVDS-1 --mode 1366x768 --rate 60.00"
-  spawnOnce "xset r rate 200 30"
-  spawnOnce "pulseaudio -D"
-  spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/lights.jpg"
+  spawnOnce "xset r rate 200 25"
+  spawnOnce "feh --bg-scale ~/.config/xmonad/xpm/lights.jpg"
 
 
 -- Keys

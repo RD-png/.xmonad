@@ -10,7 +10,7 @@ Config { font    = "xft:Source Code Pro:weight=bold:pixelsize=12:antialias=true:
        , hideOnStart = False
        , allDesktops = True
        , persistent = True
-       , iconRoot = "/root/.config/xmonad/xpm/"  -- default: "."
+       , iconRoot = "~/.config/xmonad/xpm/"  -- default: "."
        , commands = [
                       Run Date "<fn=2>\xf017</fn>  %d %b %Y - (%H:%M) " "date" 50
                     , Run Cpu ["-t", "<fn=2>\xf108</fn>  cpu: (<total>%)","-H","50","--high","red"] 20
