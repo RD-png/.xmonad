@@ -133,7 +133,7 @@ wmLayoutHook = avoidStruts
 wmStartupHook = do
   spawnOnce "xrandr --output VGA-1 --mode 1920x1080"
   spawnOnce "xrandr --output DP-1 --mode 1920x1080 --left-of VGA-1"
-  spawnOnce "xset r rate 200 25"
+  spawnOnce "xset r rate 250 25"
   spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/street.jpg"
 
 
