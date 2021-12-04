@@ -3,7 +3,7 @@ Config { font    = "xft:Source Code Pro:weight=bold:pixelsize=12:antialias=true:
                            , "xft:Font Awesome:pixelsize=12"
                            , "xft:Font Awesome:pixelsize=12"
                            ]
-       , bgColor = "#252324"
+       , bgColor = "#212121"
        , fgColor = "#98be65"
        , position = Static { xpos = 0 , ypos = 0, width = 1920, height = 24 }
        , lowerOnStart = True

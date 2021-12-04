@@ -1,8 +1,8 @@
 import XMonad
 
 -- Hooks
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
-import XMonad.Hooks.EwmhDesktops (fullscreenEventHook)
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, shorten, PP(..))
+import XMonad.Hooks.EwmhDesktops (fullscreenEventHook, ewmhDesktopsEventHook, ewmhDesktopsLogHook)
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.InsertPosition (insertPosition, Focus (Newer), Position (Below))
@@ -38,7 +38,8 @@ import qualified XMonad.StackSet as W
 main :: IO ()
 main = do
   -- Xmobar
-  xmproc1 <- spawnPipe "xmobar -x 0 $HOME/.config/xmonad/xmobarrc"
+  -- xmproc1 <- spawnPipe "xmobar -x 0 $HOME/.config/xmonad/xmobarrc"
+  xmproc1 <- spawnPipe "polybar -c $XDG_CONFIG_HOME/polybar.config main &> /dev/null &"
   xmonad
     $ docks
     $ withUrgencyHook NoUrgencyHook
@@ -58,18 +59,7 @@ main = do
       , manageHook          = insertPosition Below Newer <+> manageDocks <+> manageHook def
       , layoutHook          = wmLayoutHook
       , startupHook         = wmStartupHook
-      , logHook = dynamicLogWithPP $ xmobarPP
-         {
-           ppOutput = \x -> hPutStrLn xmproc1 x
-         , ppCurrent = xmobarColor "#98be65" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"
-         , ppVisible = xmobarColor "#98be65" ""
-         , ppHidden = xmobarColor "#82AAFF" "" . wrap "" ""
-         , ppHiddenNoWindows = xmobarColor "#c792ea" ""
-         , ppTitle = xmobarColor "#c5c8c6" "" . shorten 60
-         , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"
-         , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"
-         , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
-         }
+      , logHook = ewmhDesktopsLogHook
       } `additionalKeys` wmKeys
 
 
@@ -113,6 +103,7 @@ layoutColor = "#AA3355"
 
 
 -- Workspaces
+wmWorkspaces :: [[Char]]
 wmWorkspaces = [" web ", " edit ", " dir ", " term ", " disc ", " mu ", " sys ", " vid ", " gfx "]
 
 
@@ -129,14 +120,13 @@ wmLayoutHook = avoidStruts
     ratio = 1/2
 
 -- Startup Hook
-wmStartupHook = do
-  spawnOnce "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00"
-  spawnOnce "xset r rate 200 30"
-  spawnOnce "pulseaudio -D"
+wmStartupHook :: X ()
+wmStartupHook = do  
   spawnOnce "feh --bg-scale /root/.config/xmonad/xpm/street.jpg"
 
 
 -- Keys
+wmKeys :: [((KeyMask, KeySym), X ())]
 wmKeys =
   [
     ((wmModKey .|. shiftMask, xK_c), spawn "xmonad --recompile")
